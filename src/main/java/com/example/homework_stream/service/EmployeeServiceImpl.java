@@ -50,6 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .filter(e -> e.getDepartment() == department)
                 .max(Comparator.comparingInt(employee -> employee.getSalary()))
                 .orElseThrow(EmployeeNotFoundException::new);
+
     }
 
     @Override
@@ -62,9 +63,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployeeInDepartment(int department) {
-        return employees.stream()
+        return  employees.stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
+
     }
 
     @Override
@@ -83,12 +85,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public List<Employee> getEmployees() {
-        employees.add(new Employee("Maria", "Sharapova", 30000, 2));
-        employees.add(new Employee("Vasya", "Pupkin", 25000, 1));
-        employees.add(new Employee("Oleg", "Ivanov", 24000, 3));
-        employees.add(new Employee("Rafa", "Nadal", 20000, 2));
-        employees.add(new Employee("Roger", "Federer", 15000, 3));
-        employees.add(new Employee("Ivan", "Urgant", 40000, 1));
+        employees.add(new Employee("Иван", "Гордуни", 30000, 2));
+        employees.add(new Employee("Вася", "Обломов", 25000, 1));
+        employees.add(new Employee("Криан", "Кошкин", 24000, 3));
+        employees.add(new Employee("Рома", "Петросян", 20000, 2));
+        employees.add(new Employee("Федя", "Кляйн", 15000, 3));
+        employees.add(new Employee("Ирина", "Одинокая", 40000, 1));
         return employees;
     }
 }

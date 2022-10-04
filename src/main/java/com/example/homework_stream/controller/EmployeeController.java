@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
@@ -53,13 +54,37 @@ public class EmployeeController {
     public Employee minSalary(@RequestParam(value = "departmentId") int department) {
         return service.getMinSalary(department);
     }
+
     @GetMapping(path = "/departments/all")
     public Employee allEmployeeInDepartment(@RequestParam(value = "departmentId") int department) {
-        return (Employee) service.getAllEmployeeInDepartment(department);
+
+        try {
+            return (Employee) service.getAllEmployeeInDepartment(department);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-    @GetMapping(path = "/departments/all")
-    public Employee AllEmployeeMultipleDepartment() {
-        return (Employee) service.getAllEmployeeMultipleDepartment();
+
+    @GetMapping(path = "/departments")
+    public String AllEmployeeMultipleDepartment() {
+        List<Employee> employees = null;
+        try {
+            employees = service.getAllEmployeeMultipleDepartment();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return employees.toString();
+    }
+
+    @GetMapping(path = "/getAll")
+    public String employee() {
+        List<Employee> employees = null;
+        try {
+            employees = service.getEmployees();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return employees.toString();
     }
 
 }
