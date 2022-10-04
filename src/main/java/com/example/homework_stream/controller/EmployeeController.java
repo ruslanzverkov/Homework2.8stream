@@ -18,24 +18,48 @@ public class EmployeeController {
         this.service = service;
     }
 
-    @GetMapping("/add")
-    public Employee addEmployee(@RequestParam String firstName,
-                                @RequestParam String lastName,
-                                @RequestParam int salary,
-                                @RequestParam int department) {
-        return  service.add(firstName, lastName,salary,department);
+    @GetMapping(path = "/add")
+    public Employee addEmployee(@RequestParam(value = "firstName") String firstName,
+                                @RequestParam(value = "LastName") String lastName,
+                                @RequestParam(value = "salary") int salary,
+                                @RequestParam(value = "department") int department) {
+        return service.add(firstName, lastName, salary, department);
     }
-    @GetMapping("/remove")
-    public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName) {
-        return  service.remove(firstName, lastName);
+
+    @GetMapping(path = "/remove")
+    public Employee removeEmployee(@RequestParam(value = "firstName") String firstName,
+                                   @RequestParam(value = "lastNameName") String lastName) {
+
+        return service.remove(firstName, lastName);
     }
-    @GetMapping("/find")
-    public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName) {
-        return  service.find(firstName, lastName);
+
+    @GetMapping(path = "/find")
+    public Employee findEmployee(@RequestParam(value = "firstName")  String firstName,
+                                 @RequestParam(value = "lastName")  String lastName) {
+        return service.find(firstName, lastName);
     }
 
     @GetMapping
     public Collection<Employee> findAll() {
         return service.findAll();
     }
+
+
+    @GetMapping(path = "/departments/max-salary")
+    public Employee maxSalary(@RequestParam(value = "departmentId") int department) {
+        return service.getMaxSalary(department);
+    }
+    @GetMapping(path = "/departments/min-salary")
+    public Employee minSalary(@RequestParam(value = "departmentId") int department) {
+        return service.getMinSalary(department);
+    }
+    @GetMapping(path = "/departments/all")
+    public Employee allEmployeeInDepartment(@RequestParam(value = "departmentId") int department) {
+        return (Employee) service.getAllEmployeeInDepartment(department);
+    }
+    @GetMapping(path = "/departments/all")
+    public Employee AllEmployeeMultipleDepartment() {
+        return (Employee) service.getAllEmployeeMultipleDepartment();
+    }
+
 }
