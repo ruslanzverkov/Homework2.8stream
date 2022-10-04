@@ -56,13 +56,15 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/departments/all")
-    public Employee allEmployeeInDepartment(@RequestParam(value = "departmentId") int department) {
+    public String allEmployeeInDepartment(@RequestParam(value = "departmentId") int department) {
 
+        List<Employee> employees = null;
         try {
-            return (Employee) service.getAllEmployeeInDepartment(department);
+            employees = service.getAllEmployeeInDepartment(department);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return employees.toString();
     }
 
     @GetMapping(path = "/departments")
