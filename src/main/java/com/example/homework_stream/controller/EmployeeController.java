@@ -1,6 +1,8 @@
 package com.example.homework_stream.controller;
 
 import com.example.homework_stream.model.Employee;
+import com.example.homework_stream.service.DepartmentService;
+import com.example.homework_stream.service.DepartmentServiceImpl;
 import com.example.homework_stream.service.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,46 +15,48 @@ import java.util.List;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-    private final EmployeeService service;
+    private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
 
-    public EmployeeController(EmployeeService service) {
-        this.service = service;
+    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
+        this.employeeService = employeeService;
+        this.departmentService = departmentService;
     }
 
     @GetMapping(path = "/add")
     public Employee addEmployee(@RequestParam(value = "firstName") String firstName,
                                 @RequestParam(value = "LastName") String lastName,
-                                @RequestParam(value = "salary") int salary,
-                                @RequestParam(value = "department") int department) {
-        return service.add(firstName, lastName, salary, department);
+                                @RequestParam(value = "salary") int department,
+                                @RequestParam(value = "department") double salary) {
+        return employeeService.add(firstName, lastName,department, salary );
     }
 
     @GetMapping(path = "/remove")
     public Employee removeEmployee(@RequestParam(value = "firstName") String firstName,
                                    @RequestParam(value = "lastNameName") String lastName) {
 
-        return service.remove(firstName, lastName);
+        return employeeService.remove(firstName, lastName);
     }
 
     @GetMapping(path = "/find")
     public Employee findEmployee(@RequestParam(value = "firstName")  String firstName,
                                  @RequestParam(value = "lastName")  String lastName) {
-        return service.find(firstName, lastName);
+        return employeeService.find(firstName, lastName);
     }
 
     @GetMapping
     public Collection<Employee> findAll() {
-        return service.findAll();
+        return employeeService.findAll();
     }
 
 
     @GetMapping(path = "/departments/max-salary")
     public Employee maxSalary(@RequestParam(value = "departmentId") int department) {
-        return service.getMaxSalary(department);
+        return departmentService.findEmployeeWithMaxSalaryFromDepartment(department);
     }
     @GetMapping(path = "/departments/min-salary")
     public Employee minSalary(@RequestParam(value = "departmentId") int department) {
-        return service.getMinSalary(department);
+        return departmentService.findEmployeeWithMixSalaryFromDepartment(department);
     }
 
     @GetMapping(path = "/departments/all")
@@ -60,7 +64,7 @@ public class EmployeeController {
 
         List<Employee> employees = null;
         try {
-            employees = service.getAllEmployeeInDepartment(department);
+            employees = departmentService.findEmployeesFromDepartment(department);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

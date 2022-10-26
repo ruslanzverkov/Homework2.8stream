@@ -5,17 +5,17 @@ import java.util.Objects;
 public class Employee {
     private final String firstName;
     private final String lastName;
-    private int salary;
     private int department;
+    private double salary;
 
-    public Employee(String firstName, String lastName, int salary, int department) {
+    public Employee(String firstName, String lastName, int department, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.salary = salary;
         this.department = department;
+        this.salary = salary;
     }
 
-    public int getSalary() {
+    public double getSalary() {
         return salary;
     }
 
