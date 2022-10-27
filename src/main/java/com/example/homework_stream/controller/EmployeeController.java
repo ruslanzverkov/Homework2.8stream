@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
@@ -71,26 +72,10 @@ public class EmployeeController {
         return employees.toString();
     }
 
-    @GetMapping(path = "/departments")
-    public String AllEmployeeMultipleDepartment() {
-        List<Employee> employees = null;
-        try {
-            employees = service.getAllEmployeeMultipleDepartment();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return employees.toString();
-    }
+    @GetMapping("/departments/all")
+    public String getListOfEmployeesByDepartment() {
 
-    @GetMapping(path = "/getAll")
-    public String employee() {
-        List<Employee> employees = null;
-        try {
-            employees = service.getEmployees();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return employees.toString();
+        return departmentService.findEmployees().toString();
     }
 
 }
