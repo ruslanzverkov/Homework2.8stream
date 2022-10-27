@@ -17,11 +17,11 @@ import java.util.Map;
 @RequestMapping("/employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private final DepartmentService departmentService;
 
-    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
+
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.departmentService = departmentService;
+
     }
 
     @GetMapping(path = "/add")
@@ -51,31 +51,6 @@ public class EmployeeController {
     }
 
 
-    @GetMapping(path = "/departments/max-salary")
-    public Employee maxSalary(@RequestParam(value = "departmentId") int department) {
-        return departmentService.findEmployeeWithMaxSalaryFromDepartment(department);
-    }
-    @GetMapping(path = "/departments/min-salary")
-    public Employee minSalary(@RequestParam(value = "departmentId") int department) {
-        return departmentService.findEmployeeWithMixSalaryFromDepartment(department);
-    }
 
-    @GetMapping(path = "/departments/all")
-    public String allEmployeeInDepartment(@RequestParam(value = "departmentId") int department) {
-
-        List<Employee> employees = null;
-        try {
-            employees = departmentService.findEmployeesFromDepartment(department);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return employees.toString();
-    }
-
-    @GetMapping("/departments/all")
-    public String getListOfEmployeesByDepartment() {
-
-        return departmentService.findEmployees().toString();
-    }
 
 }
