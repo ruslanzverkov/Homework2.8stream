@@ -13,9 +13,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final Map<String,Employee> employees;
 
-    public EmployeeServiceImpl(List<Employee> employees) {
+    public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
     }
+
+
 
     private String getKey(String firstName, String lastName) {
         return firstName+"|"+lastName;
