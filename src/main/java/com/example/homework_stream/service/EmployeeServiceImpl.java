@@ -29,8 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee add(String firstName, String lastName,int department,double salary) {
-        checkAvailabilityDepartment(department);
-        validateFirstAndLastName(firstName, lastName);
+
         Employee employee = new Employee(firstName, lastName,department,salary);
         if (employees.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException();
@@ -41,8 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee remove(String firstName, String lastName) {
-        validateFirstAndLastName(firstName, lastName);
-        String key = getKey(firstName, lastName);
+
+        String key = firstName+" "+ lastName;
         if (employees.containsKey(key)) {
             return employees.remove(key);
         } else {
@@ -53,8 +52,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee find(String firstName, String lastName) {
-        validateFirstAndLastName(firstName, lastName);
-        String key = getKey(firstName, lastName);
+
+        String key = firstName+" "+ lastName;
         if (!employees.containsKey(key)) {
             throw new EmployeeNotFoundException("Сотрудник не найден, проверьте правильность ввода данных!");
         }
@@ -66,19 +65,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         return Collections.unmodifiableCollection(employees.values());
     }
 
-    @Override
-    public void validateFirstAndLastName(String firstName, String lastName) {
-        if (isAllBlank(firstName) || isAllBlank(lastName)
-                || !isAlpha(firstName) || !isAlpha(lastName)) {
-            throw new InvalidNameCharactersException("Неверное имя и фамилия");
-        }
-    }
-    @Override
-    public void checkAvailabilityDepartment(int departmentId) {
-        if (departmentId <= 0 || departmentId > Employee.NUMBER_OF_DEPARTMENTS) {
-            throw new IllegalArgumentException("Неверный номер отдела, допустимое значение от 1 до "
-                    + Employee.NUMBER_OF_DEPARTMENTS);
-        }
-    }
+
 }
 

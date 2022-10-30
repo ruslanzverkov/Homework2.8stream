@@ -7,8 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface EmployeeService {
-    void validateFirstAndLastName(String firstName, String lastName);
-    void checkAvailabilityDepartment(int departmentId);
+
     Employee add(String firstName, String lastName,int department,double salary);
 
     Employee remove(String firstName, String lastName);

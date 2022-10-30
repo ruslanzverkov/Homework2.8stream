@@ -5,17 +5,22 @@ import com.example.homework_stream.exeption.EmployeeNotFoundException;
 import com.example.homework_stream.model.Employee;
 import com.example.homework_stream.service.EmployeeService;
 import com.example.homework_stream.service.EmployeeServiceImpl;
+import net.minidev.json.writer.CollectionMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import com.example.homework_stream.ConstantTest;
 
 import static com.example.homework_stream.ConstantTest.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class EmployeeServiceTest {
@@ -32,13 +37,13 @@ public class EmployeeServiceTest {
     public void addTest() {
         Employee actual = out.add(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
         Employee expected = new Employee(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
-        Assertions.assertEquals(actual, expected);
+        assertEquals(actual, expected);
     }
 
     @Test
     public void addTestThrows() {
         Employee actual = out.add(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
-        Assertions.assertThrows(EmployeeAlreadyAddedException.class,
+        assertThrows(EmployeeAlreadyAddedException.class,
                 () -> out.add(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d));
     }
 
@@ -47,14 +52,14 @@ public class EmployeeServiceTest {
         Employee expected = new Employee(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
         out.add(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
         Employee actual = out.remove(FIRST_NAME_IVAN, LAST_NAME_IVANOV);
-        Assertions.assertEquals(actual, expected);
+        assertEquals(actual, expected);
     }
 
 
     // не могу понять почему тест не проходит
     @Test
     public void removeTestThrows() {
-        Assertions.assertThrows(EmployeeNotFoundException.class, () -> out.remove(FIRST_NAME_IVAN, LAST_NAME_IVANOV));
+        assertThrows(EmployeeNotFoundException.class, () -> out.remove(FIRST_NAME_IVAN, LAST_NAME_IVANOV));
     }
 
     @Test
@@ -63,7 +68,9 @@ public class EmployeeServiceTest {
         out.add(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
         Employee expected = new Employee(FIRST_NAME_IVAN, LAST_NAME_IVANOV, DEPARTMENT_1, SALARY_10000d);
         Employee actual = out.find(FIRST_NAME_IVAN, LAST_NAME_IVANOV);
-        Assertions.assertEquals(actual,expected);
+        assertEquals(actual, expected);
     }
+
+
 
 }
