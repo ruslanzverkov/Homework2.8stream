@@ -20,5 +20,13 @@ public class EmployeeNotFoundException extends RuntimeException {
         super(cause);
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }
